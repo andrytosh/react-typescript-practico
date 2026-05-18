@@ -8,6 +8,10 @@
 
 Construir un **contador** paso a paso: primero botones sin estado, luego `useState`, mostrar el valor, enlazar `onClick` y añadir **reinicio**. Todo en componentes **funcionales** (no clases).
 
+## Tiempo estimado
+
+40 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -138,6 +142,8 @@ Sustituye los botones por:
 
 **Comprobación:** al pulsar + y − el número cambia en pantalla sin recargar la página.
 
+**Buena práctica (opcional ya):** `setCuenta((c) => c + 1)` en lugar de `setCuenta(cuenta + 1)` evita valores obsoletos si hubiera varios clicks muy rápidos.
+
 ---
 
 ## Paso 7 — Botón Reiniciar
@@ -153,6 +159,14 @@ Añade después del botón **+**:
 **Comprobación:** tras varios clics en +, **Reiniciar** deja la cuenta en 0.
 
 ---
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| El número no cambia al pulsar | Falta `onClick` o no llamas a `setCuenta`. |
+| `useState is not defined` | `import { useState } from 'react'`. |
+| Pantalla en blanco | Error de sintaxis en `Contador.tsx`; mira la consola. |
 
 ## Retos
 

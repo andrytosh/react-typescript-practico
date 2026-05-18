@@ -8,6 +8,10 @@
 
 Crear un **servicio** `usuarios.ts`, un componente **ListaUsuarios** que haga `fetch` en `useEffect`, y manejar estados **cargando**, **error** y **cancelación** del efecto al desmontar.
 
+## Tiempo estimado
+
+55 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -212,6 +216,67 @@ Cambia temporalmente `API_URL` a una URL inválida, recarga, y vuelve a dejar la
 **Comprobación:** se muestra el párrafo con `role="alert"`.
 
 ---
+
+
+
+---
+
+## Anexo — `ListaUsuarios.tsx` completo
+
+```tsx
+import { useState, useEffect } from 'react'
+import { obtenerUsuarios } from '../services/usuarios'
+import type { Usuario } from '../types/usuario'
+
+export function ListaUsuarios() {
+  const [usuarios, setUsuarios] = useState<Usuario[]>([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    let cancelado = false
+
+    obtenerUsuarios(controller.signal)
+      .then((data) => {
+        if (!cancelado) {
+          setUsuarios(data)
+          setCargando(false)
+        }
+      })
+      .catch((err: unknown) => {
+        if (cancelado) return
+        if (err instanceof Error && err.name === 'AbortError') return
+        setError(err instanceof Error ? err.message : 'Error desconocido')
+        setCargando(false)
+      })
+
+    return () => {
+      cancelado = true
+      controller.abort()
+    }
+  }, [])
+
+  if (cargando) return <p>Cargando usuarios…</p>
+  if (error) return <p role="alert">Error: {error}</p>
+
+  return (
+    <ul>
+      {usuarios.map((u) => (
+        <li key={u.id}>{u.name} ({u.email})</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| Carga infinita | Falta `setCargando(false)` en `then`/`catch` o hay error silenciado. |
+| CORS / red | JSONPlaceholder permite navegador; comprueba pestaña Network. |
+| Lista vacía sin error | Revisa que `setUsuarios(data)` recibe el array (10 usuarios). |
 
 ## Retos
 

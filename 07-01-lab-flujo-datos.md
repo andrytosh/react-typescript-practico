@@ -8,6 +8,10 @@
 
 Practicar el patrón **los datos bajan (props), los eventos suben (callbacks)**: el **padre** guarda el total de clicks; el **hijo** cuenta pulsaciones locales y notifica al padre con una función recibida por props.
 
+## Tiempo estimado
+
+35 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -128,6 +132,43 @@ export default App
 **Comprobación:** puedes explicar en dos frases qué baja por props y qué sube por callback.
 
 ---
+
+
+
+---
+
+## Anexo — `App.tsx` y `ClickCounterButton.tsx` finales
+
+`src/components/ClickCounterButton.tsx` — igual al del paso 2.
+
+`src/App.tsx`:
+
+```tsx
+import { useState } from 'react'
+import { ClickCounterButton } from './components/ClickCounterButton'
+
+function App() {
+  const [totalClicks, setTotalClicks] = useState(0)
+
+  return (
+    <div style={{ padding: '1rem' }}>
+      <h1>Flujo de datos</h1>
+      <p>Total de clicks (padre): <strong>{totalClicks}</strong></p>
+      <ClickCounterButton onClickCountChange={setTotalClicks} />
+    </div>
+  )
+}
+
+export default App
+```
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| Error de TypeScript en el hijo | Falta pasar `onClickCountChange={...}` desde `App`. |
+| El padre no se actualiza | El hijo debe llamar a la función en `handleClick`. |
+| Números distintos | Ambos deben usar el mismo `nuevoTotal` al notificar. |
 
 ## Retos
 

@@ -8,6 +8,10 @@
 
 Formulario **controlado** con campos nombre, email y mensaje; validar email; deshabilitar envío si es inválido; `preventDefault` en submit y mostrar un **resumen** enviado.
 
+## Tiempo estimado
+
+60–75 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -229,21 +233,52 @@ Debajo del `</form>` (o dentro del mismo componente), añade:
 
 ---
 
-## Paso 7 — Limpiar campos tras enviar (opcional recomendado)
+## Paso 7 — Resumen que no se borra al limpiar el formulario
 
-**Objetivo:** dejar el formulario listo para otro mensaje.
+**Objetivo:** guardar una copia de lo enviado.
 
-Dentro de `handleSubmit`, después de `setEnviado(true)`:
+Añade el tipo y estado:
 
 ```tsx
+type ResumenEnviado = { nombre: string; email: string; mensaje: string }
+const [resumen, setResumen] = useState<ResumenEnviado | null>(null)
+```
+
+En `handleSubmit`, después de validar:
+
+```tsx
+setResumen({ nombre, email, mensaje })
 setNombre('')
 setEmail('')
 setMensaje('')
 ```
 
-**Comprobación:** los inputs quedan vacíos pero el resumen sigue mostrando lo que se envió (guarda una copia en otro estado si quieres que el resumen no se borre al limpiar — reto).
+Muestra el bloque con `resumen` en lugar de los campos vacíos:
+
+```tsx
+{resumen && (
+  <div style={{ marginTop: '1rem', padding: '1rem', background: '#f0f0f0' }}>
+    <h3>Resumen enviado</h3>
+    <p><strong>Nombre:</strong> {resumen.nombre}</p>
+    <p><strong>Email:</strong> {resumen.email}</p>
+    <p><strong>Mensaje:</strong> {resumen.mensaje}</p>
+  </div>
+)}
+```
+
+**Comprobación:** tras enviar, los inputs quedan vacíos pero el resumen conserva los textos.
+
 
 ---
+
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| La página se recarga al enviar | Falta `e.preventDefault()` en `handleSubmit`. |
+| No puedes escribir en inputs | Cada input necesita `value` y `onChange`. |
+| Botón siempre deshabilitado | Comprueba `emailValido`; prueba con `usuario@dominio.com`. |
 
 ## Retos
 

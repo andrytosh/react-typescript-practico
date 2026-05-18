@@ -8,6 +8,10 @@
 
 Instalar **react-router-dom**, envolver la app con **BrowserRouter** en `main.tsx`, crear páginas **Inicio**, **Contacto** y **NoEncontrado**, y navegar con **Routes**, **Route** y **Link** (sin recargar la página).
 
+## Tiempo estimado
+
+50 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -143,31 +147,56 @@ Prueba manualmente en la barra de direcciones: `/`, `/contacto`, `/ruta-falsa`.
 
 **Comprobación:** cada URL muestra su página; `/ruta-falsa` muestra 404.
 
+> En el paso 5 sustituirás `App.tsx` por la versión que incluye también la barra de navegación.
+
 ---
 
 ## Paso 5 — Navegación con `Link`
 
-**Objetivo:** cambiar de ruta sin `<a href>` que recargue toda la página.
+**Objetivo:** cambiar de ruta sin recargar el documento entero.
 
-Añade en **`src/App.tsx`** (antes de `<Routes>`):
+Sustituye **todo** **`src/App.tsx`** por (incluye nav + rutas):
 
 ```tsx
 import { Routes, Route, Link } from 'react-router-dom'
+import { Inicio } from './pages/Inicio'
+import { Contacto } from './pages/Contacto'
+import { NoEncontrado } from './pages/NoEncontrado'
+
+function App() {
+  return (
+    <div style={{ padding: '1rem' }}>
+      <h1>React Router</h1>
+      <nav style={{ marginBottom: '1rem' }}>
+        <Link to="/">Inicio</Link>
+        {' | '}
+        <Link to="/contacto">Contacto</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="*" element={<NoEncontrado />} />
+      </Routes>
+    </div>
+  )
+}
+
+export default App
 ```
 
-Y la barra de navegación:
+**Comprobación:** los enlaces cambian la vista sin parpadeo de recarga completa.
 
-```tsx
-<nav style={{ marginBottom: '1rem' }}>
-  <Link to="/">Inicio</Link>
-   | 
-  <Link to="/contacto">Contacto</Link>
-</nav>
-```
-
-**Comprobación:** al pulsar los enlaces la vista cambia **sin** parpadeo de recarga completa (compara con `<a href="/">` si lo pruebas).
+**Prueba comparativa:** sustituye temporalmente un `Link` por `<a href="/contacto">` y observa la recarga; vuelve a `Link`.
 
 ---
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| Pantalla en blanco tras instalar router | ¿Envolviste `<App />` con `<BrowserRouter>` en `main.tsx`? |
+| 404 en `/` | La ruta raíz es `path="/"` con `element={<Inicio />}`. |
+| Enlace recarga toda la página | Usa `<Link to="...">`, no `<a href>`. |
 
 ## Retos
 

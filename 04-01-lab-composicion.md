@@ -8,6 +8,10 @@
 
 Crear un componente **Tarjeta** reutilizable que reciba **`children`**, usarlo dentro de **ListaProductos** y montar todo en **App**. Practicarás composición sin duplicar estilos de contenedor.
 
+## Tiempo estimado
+
+40–50 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -175,6 +179,14 @@ export default App
 **Comprobación:** ves tres tarjetas con nombre y precio; consola sin warnings de `key`.
 
 ---
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| `Cannot find module './components/Tarjeta'` | Ruta del import; archivo en `src/components/Tarjeta.tsx`. |
+| Tarjetas sin borde | Los estilos están inline en `Tarjeta`; comprueba que renderizas `<Tarjeta>`. |
+| Error en `productos.ts` | El import debe ser `from '../types/producto'`. |
 
 ## Retos
 

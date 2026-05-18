@@ -8,6 +8,10 @@
 
 Mostrar la **hora actual** que se actualiza cada segundo con `setInterval`, usando `useEffect` con **array de dependencias vacío** y **función de limpieza** al desmontar.
 
+## Tiempo estimado
+
+30 minutos.
+
 ## Prerrequisitos
 
 - Haber completado [2.1 Lab Vite](02-01-lab-vite.md) (proyecto React + TypeScript con Vite).
@@ -147,6 +151,14 @@ Abre la consola, pon un `console.log` temporal dentro del efecto y otro en la li
 **Comprobación:** al ocultar, no quedan intervalos activos (sin logs repetidos tras desmontar).
 
 ---
+
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| La hora no avanza | ¿Olvidaste `[]` como segundo argumento de `useEffect`? |
+| Warning de memory leak | Añade `return () => clearInterval(id)` en el efecto. |
+| Hora incorrecta | `toLocaleTimeString('es-ES', { hour12: false })`. |
 
 ## Retos
 

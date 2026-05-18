@@ -8,10 +8,21 @@
 
 Al terminar tendrás un proyecto **React + TypeScript** creado con Vite, el servidor de desarrollo en marcha y un **build de producción** comprobado. Este proyecto lo reutilizarás en los labs siguientes (puedes llamarlo como quieras; en los ejemplos usamos la carpeta `react-curso-practico`).
 
+## Tiempo estimado
+
+30–45 minutos.
+
 ## Prerrequisitos
 
 - Node.js y npm instalados (`node -v`, `npm -v`).
 - Terminal en la carpeta donde quieras crear el proyecto (por ejemplo tu home o `~/proyectos`).
+
+## Archivos implicados
+
+| Acción | Ruta |
+|--------|------|
+| Crea Vite | `package.json`, `index.html`, `src/main.tsx` |
+| Editas | `src/App.tsx` |
 
 ## Resultado esperado
 
@@ -83,7 +94,7 @@ createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- `getElementById('root')` enlaza con `<div id="root">` en `index.html`.
+- `getElementById('root')` enlaza con `<motion.div id="root">` en `index.html`.
 - `createRoot(...).render(...)` es la API moderna de React 18+.
 
 **Comprobación:** puedes explicar en una frase qué hace `main.tsx` (montar `App` en `#root`).
@@ -135,9 +146,22 @@ Abre la URL que indique `preview` (a menudo `http://localhost:4173`).
 
 ---
 
+## Si algo falla
+
+| Síntoma | Qué revisar |
+|---------|-------------|
+| `npm: command not found` | Instala Node.js LTS desde [nodejs.org](https://nodejs.org). |
+| Puerto distinto a 5173 | Usa la URL exacta que imprime Vite en la terminal. |
+| Pantalla en blanco | F12 → Console; suele haber error de sintaxis en `App.tsx`. |
+| `getElementById('root')` es null | `index.html` debe tener `<motion.div id="root">` → usa `<div id="root">`. |
+
+---
+
 ## Retos
 
-1. **Reto A:** Añade en `App.tsx` un segundo párrafo con tu nombre. Guarda y verifica HMR.
+| Reto | Enunciado |
+|------|-----------|
+| A | Añade en `App.tsx` un segundo párrafo con tu nombre. Guarda y verifica HMR.
 2. **Reto B:** Ejecuta `npm run build` otra vez tras el cambio y confirma que `dist/` refleja el texto nuevo.
 3. **Reto C:** En `package.json`, localiza los scripts `dev`, `build` y `preview` y anota en una línea qué hace cada uno.
 
